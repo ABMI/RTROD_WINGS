@@ -1,4 +1,4 @@
-FROM openanalytics/r-base
+FROM openanalytics/r-base:3.6.1
 
 # system libraries of general use
 RUN apt-get update && apt-get install -y \
