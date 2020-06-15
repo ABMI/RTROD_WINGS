@@ -33,16 +33,12 @@ RUN apt-get install -y \
         libcurl4-gnutls-dev \
         libxml2-dev libssl-dev
 
-RUN R -e "install.packages('devtools')"
 RUN R CMD javareconf
-RUN R -e "devtools::install_github('ohdsi/DatabaseConnector')"
-RUN R -e "devtools::install_github('ohdsi/FeatureExtraction')"
-RUN R -e "devtools::install_github('ohdsi/PatientLevelPrediction')"
-RUN R -e "install.packages(c('dplyr','epitools','ggfortify','ggplot2','lcmm','lme4','reshape2','survival'))"
-RUN R -e "install.packages(c('shinydashboard','shinyWidgets','shinydashboardPlus','tidyverse','lmerTest'))"
-RUN R -e "install.packages('openssl')"
-RUN R -e "install.packages('jose')"
-RUN R -e "devtools::install_github('ABMI/RTROD_WINGS',ref='master')"
+
+## Install R packages
+RUN mkdir -p /opt/software/setup/R
+ADD install_packages.r /opt/software/setup/R/
+RUN Rscript /opt/software/setup/R/install_packages.r
 
 RUN mkdir -p /root/icarusviewer/key
 COPY key /root/icarusviewer/key
