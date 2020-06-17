@@ -1,17 +1,5 @@
 FROM openanalytics/r-base:3.6.1
 
-# system libraries of general use
-RUN apt-get update && apt-get install -y \
-    sudo \
-    pandoc \
-    pandoc-citeproc \
-    libcurl4-gnutls-dev \
-    libcairo2-dev \
-    libxt-dev \
-    libssl-dev \
-    libssh2-1-dev \
-    libssl1.0.0
-
 # system library dependency for the euler app
 RUN apt-get update && apt-get install -y \
     libmpfr-dev
@@ -37,8 +25,10 @@ RUN R CMD javareconf
 
 ## Install R packages
 RUN mkdir -p /opt/software/setup/R
-ADD install_packages.r /opt/software/setup/R/
-RUN Rscript /opt/software/setup/R/install_packages.r
+COPY install_packages.R /opt/software/setup/R/
+RUN Rscript /opt/software/setup/R/install_packages.R
+
+RUN R -e "devtools::install_github('abmi/RTROD_WINGS',ref='develop')"
 
 RUN mkdir -p /root/icarusviewer/key
 COPY key /root/icarusviewer/key
