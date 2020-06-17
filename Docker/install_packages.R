@@ -9,4 +9,3 @@ install.packages(c('dplyr','epitools','ggfortify','ggplot2','lcmm','lme4','resha
 install.packages(c('shinydashboard','shinyWidgets','shinydashboardPlus','tidyverse','lmerTest'))
 install.packages('openssl')
 install.packages('jose')
-devtools::install_github('ABMI/RTROD_WINGS',ref='master')
